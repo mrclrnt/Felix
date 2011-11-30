@@ -1,6 +1,8 @@
+import java.net.InetAddress;
 import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-
 
 public class HelloServeur extends UnicastRemoteObject implements Hello {
 
@@ -16,17 +18,24 @@ public class HelloServeur extends UnicastRemoteObject implements Hello {
 		System.out.println(message);
 	}
 	
-	
 	public static void main(String[] args) {
+		
+		int port; String URL;
+		try { // transformation d ’une chaîne de caractères en entier
+			Integer I = new Integer(args[0]); 
+			port = I.intValue();
+			} catch (Exception ex) {
+			System.out.println(" Please enter: Server <port>"); return;
+			}
 		try {
-			// Crée une instance de l ’objet serveur.
-			Hello obj = new HelloServeur("test");
-			// Enregistre l'objet créer auprès du serveur de noms.
-			Naming.rebind("//ma_machine/mon_serveur", obj);
-			System.out.println("HelloServeur " + " bound in registry");
-			
-		} catch (Exception exc){ }
-
+			// Création du serveur de nom - rmiregistry
+			Registry registry = LocateRegistry.createRegistry(port);
+			// Création d ’une instance de l’objet serveur
+			Hello obj = new HelloServeur("test message");
+			// Calcul de l’URL du serveur
+			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/mon_serveur";
+			Naming.rebind(URL, obj);
+		} catch (Exception exc) {}
 	}
 
 }
