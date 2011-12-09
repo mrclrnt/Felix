@@ -20,7 +20,8 @@ public class HelloServeur extends UnicastRemoteObject implements Hello {
 	
 	public static void main(String[] args) {
 		
-		int port; String URL;
+		int port; 
+		String URL;
 		try { // transformation d ’une chaîne de caractères en entier
 			Integer I = new Integer(args[0]); 
 			port = I.intValue();
