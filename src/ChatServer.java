@@ -22,8 +22,12 @@ public class ChatServer extends UnicastRemoteObject implements Hello, Connexion 
 	}
 
 	public void connect(String id) throws java.rmi.RemoteException {
-		// TODO Auto-generated method stub
-		
+		if (this.idList.contains(id)){
+			System.out.println("This id is already used, please try with another one");
+		} else {
+			this.idList.add(id);
+			System.out.println("You are connected as " + id);
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -40,7 +44,7 @@ public class ChatServer extends UnicastRemoteObject implements Hello, Connexion 
 			// Création du serveur de nom - rmiregistry
 			Registry registry = LocateRegistry.createRegistry(port);
 			// Création d ’une instance de l’objet serveur
-			Hello obj = new ChatServer("Hello Client, you are connected.");
+			Hello obj = new ChatServer("Hello Client, you can ask the ChatServer");
 			// Calcul de l’URL du serveur
 			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/mon_serveur";
 			Naming.rebind(URL, obj);
