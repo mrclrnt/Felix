@@ -8,7 +8,8 @@ public class HelloServeur extends UnicastRemoteObject implements Hello {
 
 	private static final long serialVersionUID = 1L;
 	
-	String message;
+	private String message;
+	
 	// Implémentation du constructeur
 	public HelloServeur(String msg) throws java.rmi.RemoteException {
 		message = msg;
@@ -26,17 +27,19 @@ public class HelloServeur extends UnicastRemoteObject implements Hello {
 			Integer I = new Integer(args[0]); 
 			port = I.intValue();
 			} catch (Exception ex) {
-			System.out.println(" Please enter: Server <port>"); return;
+			port = 1;
 			}
 		try {
 			// Création du serveur de nom - rmiregistry
 			Registry registry = LocateRegistry.createRegistry(port);
 			// Création d ’une instance de l’objet serveur
-			Hello obj = new HelloServeur("test message");
+			Hello obj = new HelloServeur("Hello Client, you are connected.");
 			// Calcul de l’URL du serveur
 			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/mon_serveur";
 			Naming.rebind(URL, obj);
-		} catch (Exception exc) {}
+		} catch (Exception exc) {
+			System.out.println("exception");
+		}
 	}
 
 }
