@@ -24,7 +24,6 @@ public class CommandLineReader {
 		Scanner scanner = new Scanner(System.in);
 		this.function = scanner.next();
 		this.argument = scanner.next();
-		System.out.println(function + " " + argument);
 		
 	}
 }

@@ -40,6 +40,7 @@ public class ChatServer extends UnicastRemoteObject implements Hello, Connexion 
 			} catch (Exception ex) {
 			port = 1;
 			}
+		System.out.println(port);
 		try {
 			// Création du serveur de nom - rmiregistry
 			Registry registry = LocateRegistry.createRegistry(port);
@@ -48,6 +49,7 @@ public class ChatServer extends UnicastRemoteObject implements Hello, Connexion 
 			// Calcul de l’URL du serveur
 			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/mon_serveur";
 			Naming.rebind(URL, obj);
+			System.out.println("serveur ok");
 		} catch (Exception exc) {
 			System.out.println("exception");
 		}
